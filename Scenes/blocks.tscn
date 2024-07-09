@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmmoh5h31odr3"]
+[gd_scene load_steps=12 format=3 uid="uid://dmmoh5h31odr3"]
 
 [ext_resource type="Material" uid="uid://knfes1mpex6e" path="res://Materials/grass.tres" id="1_aa8i5"]
 [ext_resource type="Material" uid="uid://dob1umdeg74ib" path="res://Materials/dirt.tres" id="2_4gqga"]
+[ext_resource type="Material" uid="uid://dq411k238wxon" path="res://Materials/wood.tres" id="3_g51p8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_b7y44"]
 material = ExtResource("1_aa8i5")
@@ -14,11 +15,22 @@ points = PackedVector3Array(-1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1
 material = ExtResource("2_4gqga")
 size = Vector3(2, 2, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbqgs"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ku7f4"]
 albedo_color = Color(0.34902, 0.352941, 0.298039, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_uilqs"]
-material = SubResource("StandardMaterial3D_bbqgs")
+[sub_resource type="BoxMesh" id="BoxMesh_0vx03"]
+material = SubResource("StandardMaterial3D_ku7f4")
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_881b1"]
+albedo_color = Color(0.0986182, 0.195222, 0.0387517, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n81kq"]
+material = SubResource("StandardMaterial3D_881b1")
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mqwp2"]
+material = ExtResource("3_g51p8")
 size = Vector3(2, 2, 2)
 
 [node name="Blocks" type="Node3D"]
@@ -40,9 +52,25 @@ mesh = SubResource("BoxMesh_msvsc")
 shape = SubResource("ConvexPolygonShape3D_vq48f")
 
 [node name="Stone" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_uilqs")
+mesh = SubResource("BoxMesh_0vx03")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Stone"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stone/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_vq48f")
+
+[node name="Leaves" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_n81kq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Leaves"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Leaves/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_vq48f")
+
+[node name="Wood" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_mqwp2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Wood"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wood/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_vq48f")

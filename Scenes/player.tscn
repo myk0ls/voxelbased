@@ -4,11 +4,11 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6sfih"]
 radius = 0.8
-height = 4.0
+height = 3.8
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tf7m2"]
 radius = 0.8
-height = 4.0
+height = 3.8
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_klhfd"]
 

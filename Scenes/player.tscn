@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://rok548jidbum"]
+[gd_scene load_steps=4 format=3 uid="uid://rok548jidbum"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_7ppca"]
 
@@ -9,8 +9,6 @@ height = 3.8
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tf7m2"]
 radius = 0.8
 height = 3.8
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_klhfd"]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_7ppca")
@@ -28,7 +26,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 0, -9)
 collide_with_areas = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(0.114123, 0, 0, 0, -0.0228611, 0.0720372, 0, 1.76282, 0.000934213, 0, 0, -2.161)
-visible = false
-mesh = SubResource("CapsuleMesh_klhfd")
+[node name="ActionTimer" type="Timer" parent="."]
+one_shot = true

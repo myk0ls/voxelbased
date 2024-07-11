@@ -21,6 +21,13 @@ public partial class GridMap : Godot.GridMap
 	{
 	}
 
+    public int GetBlock(Vector3 WorldCoordinate)
+    {
+        Vector3I MapCoordiante = LocalToMap(WorldCoordinate);
+        int index = GetCellItem(MapCoordiante);
+        return index;
+    }
+
 	public void DestroyBlock(Vector3 WorldCoordinate)
 	{
 		Vector3I MapCoordiante = LocalToMap(WorldCoordinate);

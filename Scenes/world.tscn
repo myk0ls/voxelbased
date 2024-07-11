@@ -1,8 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bb2fkiqhtp7sw"]
+[gd_scene load_steps=14 format=3 uid="uid://bb2fkiqhtp7sw"]
 
 [ext_resource type="MeshLibrary" uid="uid://c25vsh2xa4ehu" path="res://Resources/blocks.tres" id="2_7x2vq"]
 [ext_resource type="PackedScene" uid="uid://rok548jidbum" path="res://Scenes/player.tscn" id="2_y42qf"]
 [ext_resource type="Script" path="res://Scripts/GridMap.cs" id="3_ugr15"]
+[ext_resource type="Texture2D" uid="uid://drrxpxngcnt7v" path="res://Resources/Icons/Dirt.png" id="4_0rkln"]
+[ext_resource type="Texture2D" uid="uid://dpy1ed100dp68" path="res://Resources/Icons/Grass.png" id="5_kaker"]
+[ext_resource type="Texture2D" uid="uid://cly4npeaftwp7" path="res://Resources/Icons/Leaves.png" id="6_kc2br"]
+[ext_resource type="Texture2D" uid="uid://gbyrrxi80hqq" path="res://Resources/Icons/Stone.png" id="7_4n6j4"]
+[ext_resource type="Texture2D" uid="uid://cnsvyl3hex2v3" path="res://Resources/Icons/Wood.png" id="8_l5dbg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w411v"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -46,3 +51,54 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 [node name="Water" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33657, 0)
 mesh = SubResource("PlaneMesh_2q2w6")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+
+[node name="Hotbar" type="ItemList" parent="UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -221.5
+offset_top = -81.0
+offset_right = 221.5
+grow_horizontal = 2
+grow_vertical = 0
+item_count = 5
+max_columns = 5
+item_0/text = "1"
+item_0/icon = ExtResource("5_kaker")
+item_1/text = "2"
+item_1/icon = ExtResource("4_0rkln")
+item_2/text = "3"
+item_2/icon = ExtResource("7_4n6j4")
+item_3/text = "4"
+item_3/icon = ExtResource("6_kc2br")
+item_4/text = "5"
+item_4/icon = ExtResource("8_l5dbg")
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.509804)

@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dmmoh5h31odr3"]
+[gd_scene load_steps=14 format=3 uid="uid://dmmoh5h31odr3"]
 
 [ext_resource type="Material" uid="uid://knfes1mpex6e" path="res://Materials/grass.tres" id="1_aa8i5"]
 [ext_resource type="Material" uid="uid://dob1umdeg74ib" path="res://Materials/dirt.tres" id="2_4gqga"]
+[ext_resource type="Script" path="res://Scripts/Block.cs" id="2_wmh4o"]
 [ext_resource type="Material" uid="uid://dq411k238wxon" path="res://Materials/wood.tres" id="3_g51p8"]
+[ext_resource type="Resource" uid="uid://bgx5piv83jo2b" path="res://Resources/BlockStats/Grass.tres" id="4_e3cv7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_b7y44"]
 material = ExtResource("1_aa8i5")
@@ -37,6 +39,8 @@ size = Vector3(2, 2, 2)
 
 [node name="Grass" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_b7y44")
+script = ExtResource("2_wmh4o")
+BlockStat = ExtResource("4_e3cv7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Grass"]
 
@@ -45,6 +49,8 @@ shape = SubResource("ConvexPolygonShape3D_vq48f")
 
 [node name="Dirt" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_msvsc")
+script = ExtResource("2_wmh4o")
+BlockStat = ExtResource("4_e3cv7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Dirt"]
 
@@ -53,6 +59,8 @@ shape = SubResource("ConvexPolygonShape3D_vq48f")
 
 [node name="Stone" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_0vx03")
+script = ExtResource("2_wmh4o")
+BlockStat = ExtResource("4_e3cv7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Stone"]
 
@@ -61,6 +69,8 @@ shape = SubResource("ConvexPolygonShape3D_vq48f")
 
 [node name="Leaves" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_n81kq")
+script = ExtResource("2_wmh4o")
+BlockStat = ExtResource("4_e3cv7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Leaves"]
 
@@ -69,6 +79,8 @@ shape = SubResource("ConvexPolygonShape3D_vq48f")
 
 [node name="Wood" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_mqwp2")
+script = ExtResource("2_wmh4o")
+BlockStat = ExtResource("4_e3cv7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Wood"]
 

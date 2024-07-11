@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BlockStats" load_steps=2 format=3 uid="uid://bgx5piv83jo2b"]
+
+[ext_resource type="Script" path="res://Scripts/BlockStats.cs" id="1_ufxhu"]
+
+[resource]
+script = ExtResource("1_ufxhu")
+Stackable = true
+Breakable = true
+Droppable = true
+BreakPace = 2.0

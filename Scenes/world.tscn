@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bb2fkiqhtp7sw"]
+[gd_scene load_steps=15 format=3 uid="uid://bb2fkiqhtp7sw"]
 
 [ext_resource type="MeshLibrary" uid="uid://c25vsh2xa4ehu" path="res://Resources/blocks.tres" id="2_7x2vq"]
 [ext_resource type="PackedScene" uid="uid://rok548jidbum" path="res://Scenes/player.tscn" id="2_y42qf"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cly4npeaftwp7" path="res://Resources/Icons/Leaves.png" id="6_kc2br"]
 [ext_resource type="Texture2D" uid="uid://gbyrrxi80hqq" path="res://Resources/Icons/Stone.png" id="7_4n6j4"]
 [ext_resource type="Texture2D" uid="uid://cnsvyl3hex2v3" path="res://Resources/Icons/Wood.png" id="8_l5dbg"]
+[ext_resource type="PackedScene" uid="uid://dmmoh5h31odr3" path="res://Scenes/blocks.tscn" id="9_tanjk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w411v"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -49,7 +50,7 @@ script = ExtResource("3_ugr15")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Water" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33657, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.339, 0)
 mesh = SubResource("PlaneMesh_2q2w6")
 
 [node name="UI" type="Control" parent="."]
@@ -102,3 +103,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.509804)
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = 206.0
+offset_right = 117.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+max_value = 10.0
+
+[node name="Blocks" parent="." instance=ExtResource("9_tanjk")]
+visible = false

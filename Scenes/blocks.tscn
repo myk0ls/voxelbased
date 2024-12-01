@@ -1,44 +1,37 @@
 [gd_scene load_steps=14 format=3 uid="uid://dmmoh5h31odr3"]
 
-[ext_resource type="Material" uid="uid://knfes1mpex6e" path="res://Materials/grass.tres" id="1_aa8i5"]
-[ext_resource type="Material" uid="uid://dob1umdeg74ib" path="res://Materials/dirt.tres" id="2_4gqga"]
+[ext_resource type="BoxMesh" uid="uid://bc44yilo0sk63" path="res://Resources/BlockMesh/grassb.tres" id="1_pdwwh"]
 [ext_resource type="Script" path="res://Scripts/Block.cs" id="2_wmh4o"]
-[ext_resource type="Material" uid="uid://dq411k238wxon" path="res://Materials/wood.tres" id="3_g51p8"]
+[ext_resource type="BoxMesh" uid="uid://2fysi576k555" path="res://Resources/BlockMesh/dirtb.tres" id="4_055x1"]
 [ext_resource type="Resource" uid="uid://bgx5piv83jo2b" path="res://Resources/BlockStats/Grass.tres" id="4_e3cv7"]
+[ext_resource type="BoxMesh" uid="uid://nqhwrsmatmpb" path="res://Resources/BlockMesh/stoneb.tres" id="5_qaj4x"]
+[ext_resource type="BoxMesh" uid="uid://b7hnegfq7agh1" path="res://Resources/BlockMesh/leavesb.tres" id="6_wavq6"]
+[ext_resource type="BoxMesh" uid="uid://cidvktni2nl0" path="res://Resources/BlockMesh/woodb.tres" id="7_h1tuj"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_b7y44"]
-material = ExtResource("1_aa8i5")
-size = Vector3(2, 2, 2)
+[sub_resource type="MultiMesh" id="MultiMesh_sv63p"]
+transform_format = 1
+mesh = ExtResource("1_pdwwh")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vq48f"]
 points = PackedVector3Array(-1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1, -1, -1, -1, 1, -1, 1, -1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_msvsc"]
-material = ExtResource("2_4gqga")
-size = Vector3(2, 2, 2)
+[sub_resource type="MultiMesh" id="MultiMesh_vhygy"]
+transform_format = 1
+mesh = ExtResource("4_055x1")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ku7f4"]
-albedo_color = Color(0.34902, 0.352941, 0.298039, 1)
+[sub_resource type="MultiMesh" id="MultiMesh_jh3i5"]
+mesh = ExtResource("5_qaj4x")
 
-[sub_resource type="BoxMesh" id="BoxMesh_0vx03"]
-material = SubResource("StandardMaterial3D_ku7f4")
-size = Vector3(2, 2, 2)
+[sub_resource type="MultiMesh" id="MultiMesh_jtc20"]
+mesh = ExtResource("6_wavq6")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_881b1"]
-albedo_color = Color(0.0986182, 0.195222, 0.0387517, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_n81kq"]
-material = SubResource("StandardMaterial3D_881b1")
-size = Vector3(2, 2, 2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_mqwp2"]
-material = ExtResource("3_g51p8")
-size = Vector3(2, 2, 2)
+[sub_resource type="MultiMesh" id="MultiMesh_ks3t7"]
+mesh = ExtResource("7_h1tuj")
 
 [node name="Blocks" type="Node3D"]
 
-[node name="Grass" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_b7y44")
+[node name="Grass" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_sv63p")
 script = ExtResource("2_wmh4o")
 BlockStat = ExtResource("4_e3cv7")
 
@@ -47,8 +40,8 @@ BlockStat = ExtResource("4_e3cv7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Grass/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_vq48f")
 
-[node name="Dirt" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_msvsc")
+[node name="Dirt" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_vhygy")
 script = ExtResource("2_wmh4o")
 BlockStat = ExtResource("4_e3cv7")
 
@@ -57,8 +50,8 @@ BlockStat = ExtResource("4_e3cv7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Dirt/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_vq48f")
 
-[node name="Stone" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_0vx03")
+[node name="Stone" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_jh3i5")
 script = ExtResource("2_wmh4o")
 BlockStat = ExtResource("4_e3cv7")
 
@@ -67,8 +60,8 @@ BlockStat = ExtResource("4_e3cv7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stone/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_vq48f")
 
-[node name="Leaves" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_n81kq")
+[node name="Leaves" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_jtc20")
 script = ExtResource("2_wmh4o")
 BlockStat = ExtResource("4_e3cv7")
 
@@ -77,8 +70,8 @@ BlockStat = ExtResource("4_e3cv7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Leaves/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_vq48f")
 
-[node name="Wood" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_mqwp2")
+[node name="Wood" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_ks3t7")
 script = ExtResource("2_wmh4o")
 BlockStat = ExtResource("4_e3cv7")
 

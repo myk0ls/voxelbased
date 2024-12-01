@@ -8,11 +8,20 @@ public partial class Player : CharacterBody3D
 	public const float Sensitivity = 1.5f;
 	public int SelectedItem = 0;
 
+	public Block CurrentBlock = null;
+	Vector3I CurrentBlockPosition;
+	float MiningSpeed = 2f;
+	float MiningProgress = 0f;
+	float BlockHealth = 10f;
+	float MiningTimer = 0f;
+
 	public Camera3D Camera;
 	public RayCast3D RayCast;
 	public ItemList Hotbar;
 	public Timer ActionTimer;
-
+	public ProgressBar ProgBar;
+	public Node3D Blocks;
+	
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = 16;
 
@@ -23,6 +32,9 @@ public partial class Player : CharacterBody3D
 		RayCast = GetNode<RayCast3D>("Camera3D/RayCast3D");
 		Hotbar = GetNode<ItemList>("/root/World/UI/Hotbar");
 		ActionTimer = GetNode<Timer>("ActionTimer");
+		ProgBar = GetNode<ProgressBar>("/root/World/UI/ProgressBar");
+		Blocks = GetNode<Node3D>("/root/World/Blocks");
+
 
 		Hotbar.Select(0);
 	}
@@ -58,33 +70,65 @@ public partial class Player : CharacterBody3D
 		MoveAndSlide();
 	}
 
-    public override void _Input(InputEvent @event)
+    public override void _Process(double delta)
     {
-        /*
-		if (Input.IsActionJustPressed("lmb"))
-		{
-			if (RayCast.IsColliding())
-			{
-				if (RayCast.GetCollider().HasMethod("DestroyBlock"))
-				{
-					var gridMap = RayCast.GetCollider() as GridMap;
-					gridMap.DestroyBlock(RayCast.GetCollisionPoint() - RayCast.GetCollisionNormal());
-				}
-			}
-		}
-		*/
-
-        if (Input.IsActionJustPressed("lmb"))
+		if (Input.IsActionJustPressed("lmb") || (Input.IsActionPressed("lmb")) && CurrentBlock == null)
         {
             if (RayCast.IsColliding())
             {
                 if (RayCast.GetCollider().HasMethod("DestroyBlock"))
                 {
+                    Vector3 blockPosition = RayCast.GetCollisionPoint() - RayCast.GetCollisionNormal();
                     var gridMap = RayCast.GetCollider() as GridMap;
-					GD.Print(gridMap.GetBlock(RayCast.GetCollisionPoint() - RayCast.GetCollisionNormal()));
-					gridMap.DestroyBlock(RayCast.GetCollisionPoint() - RayCast.GetCollisionNormal());
+					int blockIndex = gridMap.GetBlock(blockPosition);
+
+                    if (blockIndex == -1)
+						return;
+
+					if (CurrentBlock == null || CurrentBlock != Blocks.GetChild<Block>(blockIndex))
+					{
+						CurrentBlock = Blocks.GetChild<Block>(blockIndex);
+                        ProgBar.Visible = true;
+						MiningProgress = 0f;
+						MiningTimer = 0f;
+						BlockHealth = 10f;
+						MiningSpeed = 20f;
+                    }
                 }
             }
+        }
+
+		if (Input.IsActionPressed("lmb") && CurrentBlock != null)
+		{
+			MiningTimer += (float)delta * MiningSpeed;
+			ProgBar.Value = MiningTimer;
+
+			if (MiningTimer >= BlockHealth)
+			{
+				if (RayCast.IsColliding())
+				{
+					if (RayCast.GetCollider().HasMethod("DestroyBlock"))
+					{
+						Vector3 blockPosition = RayCast.GetCollisionPoint() - RayCast.GetCollisionNormal();
+						var gridMap = RayCast.GetCollider() as GridMap;
+
+							gridMap.DestroyBlock(blockPosition);
+							ProgBar.Value = 0;
+							ProgBar.Visible = false;
+							CurrentBlock = null;
+							//InputDelay(delta);
+                    }
+				}
+			}
+		}
+
+		if (Input.IsActionJustReleased("lmb"))
+		{
+			CurrentBlock = null;
+            MiningProgress = 0f;
+			MiningTimer = 0f;
+			ProgBar.Value = 0;
+            ProgBar.Visible = false;
         }
 
         if (Input.IsActionJustPressed("rmb"))
@@ -93,12 +137,17 @@ public partial class Player : CharacterBody3D
             {
                 if (RayCast.GetCollider().HasMethod("PlaceBlock"))
                 {
-                    var gridMap = RayCast.GetCollider() as GridMap;	
-					gridMap.PlaceBlock(RayCast.GetCollisionPoint() + RayCast.GetCollisionNormal(), SelectedItem);
+                    Vector3 blockPosition = RayCast.GetCollisionPoint() + RayCast.GetCollisionNormal();
+                    var gridMap = RayCast.GetCollider() as GridMap;
+                    gridMap.PlaceBlock(blockPosition, SelectedItem);
                 }
             }
         }
 
+    }
+
+    public override void _Input(InputEvent @event)
+    {
 		if (Input.IsActionJustPressed("one"))
 		{
 			SelectedItem = 0;
@@ -141,7 +190,7 @@ public partial class Player : CharacterBody3D
 			if (motion != null)
 			{
                 Rotation = new Vector3(Rotation.X, Rotation.Y - motion.Relative.X / 1000 * Sensitivity, Rotation.Z);
-                Camera.Rotation = new Vector3(Mathf.Clamp(Camera.Rotation.X - motion.Relative.Y / 1000 * Sensitivity, -2, 2), Camera.Rotation.Y, Camera.Rotation.Z);
+                Camera.Rotation = new Vector3(Mathf.Clamp(Camera.Rotation.X - motion.Relative.Y / 1000 * Sensitivity, -1.5f, 1.5f), Camera.Rotation.Y, Camera.Rotation.Z);
             }
 		}
 
@@ -150,5 +199,27 @@ public partial class Player : CharacterBody3D
 	public float CalculateBreakTime(float BreakPace)
 	{
 		return (BreakPace * 1);
+	}
+
+	public void MineBlockStart(GridMap gridMap, Vector3 WorldCoordinate)
+	{
+		int blockIndex = gridMap.GetBlock(WorldCoordinate);
+		Block InteractBlock = Blocks.GetChild<Block>(blockIndex);
+
+        ActionTimer.WaitTime = CalculateBreakTime(InteractBlock.BlockStat.BreakPace);
+		ActionTimer.Start();
+	}
+
+	public void InputDelay(double delta)
+	{
+		float delay = 6f;
+		float delayStart = 0;
+		while (delay > 0)
+		{
+			delayStart += (float)delta * 2f;
+
+			if (delayStart == delay)
+				break;
+		}
 	}
 }

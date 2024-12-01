@@ -2,10 +2,10 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class Block : MeshInstance3D
+public partial class Block : MultiMeshInstance3D
 {
 	[Export]
-	public Resource BlockStat;
+	public BlockStats BlockStat;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
